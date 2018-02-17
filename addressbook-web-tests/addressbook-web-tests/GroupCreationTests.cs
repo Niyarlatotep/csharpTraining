@@ -50,7 +50,7 @@ namespace WebAddressbookTests
             GoToGroupsPage();
             InitGroupCreation();
             FillGroupForm(new GroupData("MyGroup", "groupHeader", "groupFooter"));
-            SubmitGroupCreation();
+            SubmitCreation();
             ReturnToGroupsPage();
             Logout();
         }
@@ -65,7 +65,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("group page")).Click();
         }
 
-        private void SubmitGroupCreation()
+        private void SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
         }

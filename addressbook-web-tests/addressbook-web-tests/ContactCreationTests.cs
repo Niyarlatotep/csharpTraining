@@ -49,7 +49,7 @@ namespace WebAddressbookTests
             Login(new AccountData("admin", "secret"));
             InitContactCreation();
             FillContactForm(new ContactData("Ivan", "Ivanov"));
-            SubmitGroupCreation();
+            SubmitCreation();
             Logout();
         }
 
@@ -59,7 +59,7 @@ namespace WebAddressbookTests
         }
 
 
-        private void SubmitGroupCreation()
+        private void SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
         }
