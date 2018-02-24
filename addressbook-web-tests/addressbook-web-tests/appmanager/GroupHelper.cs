@@ -29,6 +29,37 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
         }
 
+        public void Delete(GroupData group) {
+            manager.Navigator.GoToGroupsPage();
+            SelectByCheckBox(group);
+            DeleteGo();
+        }
+
+        public void Modify(GroupData groupToModify, GroupData newData) {
+            manager.Navigator.GoToGroupsPage();
+            SelectByCheckBox(groupToModify);
+            OpenEditing();
+            FillGroupForm(newData);
+            Update();
+        }
+
+        public void OpenEditing() {
+            driver.FindElement(By.CssSelector("[name='edit']")).Click();
+        }
+
+        public void Update()
+        {
+            driver.FindElement(By.CssSelector("[name='update']")).Click();
+        }
+
+        public void SelectByCheckBox(GroupData group) {
+            driver.FindElement(By.XPath($"//*[.='{group.Name}']/input")).Click();
+        }
+
+        public void DeleteGo() {
+            driver.FindElement(By.CssSelector("[name='delete']")).Click();
+        }
+
         public void SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();

@@ -16,6 +16,34 @@ namespace WebAddressbookTests
         {
         }
 
+        public void Modify(ContactData contactToModify, ContactData newContactData) {
+            OpenEditing(contactToModify);
+            FillContactForm(newContactData);
+            UpdateContact();
+        }
+
+        public void UpdateContact() {
+            driver.FindElement(By.CssSelector("[name='update']")).Click();
+        }
+
+        public void OpenEditing(ContactData contact) {
+            driver.FindElement(By.XPath($"//tbody//td[.='{contact.LastName}']/parent::tr//*[@title='Edit']")).Click();
+        }
+
+        public void Delete(ContactData contact) {
+            SelectByCheckBox(contact);
+            DeleteAccept();
+        }
+
+        public void DeleteAccept() {
+            driver.FindElement(By.CssSelector("[value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+        }
+
+        public void SelectByCheckBox(ContactData contact) {
+            driver.FindElement(By.XPath($"//tbody//td[.='{contact.LastName}']/parent::tr//input")).Click();
+        }
+
         public void Create(ContactData contact)
         {
             InitContactCreation();
