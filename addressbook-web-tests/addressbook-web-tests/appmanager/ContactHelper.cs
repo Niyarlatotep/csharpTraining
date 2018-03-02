@@ -17,6 +17,7 @@ namespace WebAddressbookTests
         }
 
         public void ModifyTo(ContactData newContactData) {
+            manager.Navigator.OpenHomePage();
             OpenEditing();
             FillContactForm(newContactData);
             UpdateContact();
@@ -31,6 +32,7 @@ namespace WebAddressbookTests
         }
 
         public void Delete() {
+            manager.Navigator.OpenHomePage();
             SelectFirstByCheckBox();
             DeleteAccept();
         }
@@ -52,10 +54,8 @@ namespace WebAddressbookTests
         }
         public void FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.FirstName);
+            Type(By.Name("lastname"), contact.LastName);
         }
         public void InitContactCreation()
         {

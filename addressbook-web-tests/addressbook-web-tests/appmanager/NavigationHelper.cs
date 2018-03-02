@@ -20,11 +20,19 @@ namespace WebAddressbookTests
         }
         public void GoToGroupsPage()
         {
+            if (IsElementPresent(By.CssSelector("[action*='group'] [name='new']")))
+            {
+                return;
+            }
             driver.FindElement(By.CssSelector("[href='group.php']")).Click();
         }
 
         public void OpenHomePage()
         {
+            if (driver.Url == baseURL)
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL);
         }
     }
