@@ -18,6 +18,10 @@ namespace WebAddressbookTests
 
         public void ModifyTo(ContactData newContactData) {
             manager.Navigator.OpenHomePage();
+            if (!IsElementPresent(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")))
+            {
+                Create(new ContactData("ToDelete First Name", "ToDelete second Name"));
+            }
             OpenEditing();
             FillContactForm(newContactData);
             UpdateContact();
@@ -33,6 +37,10 @@ namespace WebAddressbookTests
 
         public void Delete() {
             manager.Navigator.OpenHomePage();
+            if (!IsElementPresent(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")))
+            {
+                Create(new ContactData("ToDelete First Name", "ToDelete second Name"));
+            }
             SelectFirstByCheckBox();
             DeleteAccept();
         }
@@ -51,6 +59,7 @@ namespace WebAddressbookTests
             InitContactCreation();
             FillContactForm(contact);
             SubmitCreation();
+            manager.Navigator.OpenHomePage();
         }
         public void FillContactForm(ContactData contact)
         {

@@ -31,12 +31,20 @@ namespace WebAddressbookTests
 
         public void Delete() {
             manager.Navigator.GoToGroupsPage();
+            if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
+            {
+                Create(new GroupData("Group for testing"));
+            }
             SelectFirstByCheckBox();
             DeleteGo();
         }
 
         public void ModifyTo(GroupData newData) {
             manager.Navigator.GoToGroupsPage();
+            if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
+            {
+                Create(new GroupData("Group for testing"));
+            }
             SelectFirstByCheckBox();
             OpenEditing();
             FillGroupForm(newData);
