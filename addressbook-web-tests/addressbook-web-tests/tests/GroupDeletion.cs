@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         [Test]
         public void GroupDeletionTest()
         {
-            app.Group.Delete(new GroupData("MyGroup", "Ivanov", "Footer"));
+            app.Group.Delete();
         }
     }
 }

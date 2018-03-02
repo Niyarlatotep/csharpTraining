@@ -29,15 +29,15 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
         }
 
-        public void Delete(GroupData group) {
+        public void Delete() {
             manager.Navigator.GoToGroupsPage();
-            SelectByCheckBox(group);
+            SelectFirstByCheckBox();
             DeleteGo();
         }
 
-        public void Modify(GroupData groupToModify, GroupData newData) {
+        public void ModifyTo(GroupData newData) {
             manager.Navigator.GoToGroupsPage();
-            SelectByCheckBox(groupToModify);
+            SelectFirstByCheckBox();
             OpenEditing();
             FillGroupForm(newData);
             Update();
@@ -52,8 +52,8 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("[name='update']")).Click();
         }
 
-        public void SelectByCheckBox(GroupData group) {
-            driver.FindElement(By.XPath($"//*[.='{group.Name}']/input")).Click();
+        public void SelectFirstByCheckBox() {
+            driver.FindElement(By.CssSelector("form span:nth-child(5) input")).Click();
         }
 
         public void DeleteGo() {

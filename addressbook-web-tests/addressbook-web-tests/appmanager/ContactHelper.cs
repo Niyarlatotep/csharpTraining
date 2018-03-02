@@ -16,8 +16,8 @@ namespace WebAddressbookTests
         {
         }
 
-        public void Modify(ContactData contactToModify, ContactData newContactData) {
-            OpenEditing(contactToModify);
+        public void ModifyTo(ContactData newContactData) {
+            OpenEditing();
             FillContactForm(newContactData);
             UpdateContact();
         }
@@ -26,12 +26,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("[name='update']")).Click();
         }
 
-        public void OpenEditing(ContactData contact) {
-            driver.FindElement(By.XPath($"//tbody//td[.='{contact.LastName}']/parent::tr//*[@title='Edit']")).Click();
+        public void OpenEditing() {
+            driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")).Click();
         }
 
-        public void Delete(ContactData contact) {
-            SelectByCheckBox(contact);
+        public void Delete() {
+            SelectFirstByCheckBox();
             DeleteAccept();
         }
 
@@ -40,8 +40,8 @@ namespace WebAddressbookTests
             driver.SwitchTo().Alert().Accept();
         }
 
-        public void SelectByCheckBox(ContactData contact) {
-            driver.FindElement(By.XPath($"//tbody//td[.='{contact.LastName}']/parent::tr//input")).Click();
+        public void SelectFirstByCheckBox() {
+            driver.FindElement(By.CssSelector("tbody tr:nth-child(2) td:first-child")).Click();
         }
 
         public void Create(ContactData contact)

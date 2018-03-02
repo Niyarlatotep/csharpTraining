@@ -15,8 +15,7 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            app.Group.Modify(new GroupData("MyGroup", "Ivanov", "Footer"),
-               new GroupData("YourGroup", "Pertrof", "VrotMneNogy"));
+            app.Group.ModifyTo(new GroupData("Your", "Ivanov", "Footer"));
         }
     }
 }
