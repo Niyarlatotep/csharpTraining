@@ -6,6 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -20,7 +21,11 @@ namespace WebAddressbookTests
         [Test]
         public void ContactDeletionTest()
         {
-            app.Contact.Delete();
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+            app.Contact.DeleteFirst();         
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

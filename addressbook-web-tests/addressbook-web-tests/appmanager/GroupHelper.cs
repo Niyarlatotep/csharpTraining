@@ -21,6 +21,19 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("group page")).Click();
         }
 
+        public List<GroupData> GetGroupList()
+        {
+            manager.Navigator.GoToGroupsPage();
+            List <GroupData> groups = new List<GroupData>();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+            return groups;
+        }
+
+
         public void Create(GroupData group) {
             manager.Navigator.GoToGroupsPage();
             InitGroupCreation();
@@ -30,18 +43,19 @@ namespace WebAddressbookTests
         }
 
         public void CreateGroupIfNoGroups(GroupData group) {
+            manager.Navigator.GoToGroupsPage();
             if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
             {
                 Create(group);
             }
         }
-        public void Delete() {
+        public void DeleteFirst() {
             manager.Navigator.GoToGroupsPage();
             SelectFirstByCheckBox();
             DeleteGo();
         }
 
-        public void ModifyTo(GroupData newData) {
+        public void ModifyFirstTo(GroupData newData) {
             manager.Navigator.GoToGroupsPage();          
             SelectFirstByCheckBox();
             OpenEditing();
@@ -82,5 +96,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.CssSelector("[name='new']")).Click();
         }
+
+
     }
 }

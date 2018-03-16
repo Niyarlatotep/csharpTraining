@@ -6,6 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -15,7 +16,14 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            app.Contact.Create(new ContactData("Ivan", "Ivanov"));
+            ContactData contactToCreate = new ContactData("Ivan", "Ivanov");
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+            app.Contact.Create(contactToCreate);
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts.Add(contactToCreate);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

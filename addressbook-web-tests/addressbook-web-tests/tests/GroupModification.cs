@@ -6,6 +6,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -21,7 +22,14 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            app.Group.ModifyTo(new GroupData("Your", "Ivanov", "Footer111"));
-        }
+            GroupData modifyGroup = new GroupData("Your", "Ivanov", "Footer111");
+            List<GroupData> oldGroups = app.Group.GetGroupList();
+            app.Group.ModifyFirstTo(modifyGroup);
+            List<GroupData> newGroups = app.Group.GetGroupList();
+            oldGroups[0] = modifyGroup;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+        }      
     }
 }
