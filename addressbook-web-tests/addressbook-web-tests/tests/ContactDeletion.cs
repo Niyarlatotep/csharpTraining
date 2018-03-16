@@ -12,6 +12,11 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactDeletionTests : AuthTestBase
     {
+        [SetUp]
+        public void CreatingTestingDdataContact()
+        {
+            app.Contact.CreateContactIfNoContacts(new ContactData("ToDelete First Name", "ToDelete second Name"));
+        }
         [Test]
         public void ContactDeletionTest()
         {

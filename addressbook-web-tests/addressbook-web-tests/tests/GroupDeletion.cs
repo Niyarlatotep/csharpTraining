@@ -12,6 +12,11 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupDeletionTests : AuthTestBase
     {
+        [SetUp]
+        public void CreatingTestingDdataGroup()
+        {
+            app.Group.CreateGroupIfNoGroups(new GroupData("Group for Deleting"));
+        }
         [Test]
         public void GroupDeletionTest()
         {

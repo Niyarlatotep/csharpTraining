@@ -29,22 +29,20 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
         }
 
-        public void Delete() {
-            manager.Navigator.GoToGroupsPage();
+        public void CreateGroupIfNoGroups(GroupData group) {
             if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
             {
-                Create(new GroupData("Group for testing"));
+                Create(group);
             }
+        }
+        public void Delete() {
+            manager.Navigator.GoToGroupsPage();
             SelectFirstByCheckBox();
             DeleteGo();
         }
 
         public void ModifyTo(GroupData newData) {
-            manager.Navigator.GoToGroupsPage();
-            if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
-            {
-                Create(new GroupData("Group for testing"));
-            }
+            manager.Navigator.GoToGroupsPage();          
             SelectFirstByCheckBox();
             OpenEditing();
             FillGroupForm(newData);
