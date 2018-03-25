@@ -222,7 +222,7 @@ namespace WebAddressbookTests
 
             if (workPhone != "")
             {
-                workPhone = $"W: {workPhone}";
+                workPhone = $"W: {WorkPhone}";
             }          
 
             return $"{homePhone}{mobilePhone}{workPhone}\r\n";

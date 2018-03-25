@@ -14,17 +14,29 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
-        [Test]
-        public void GroupCreationTest()
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
-            GroupData testGroup = new GroupData("MyGroup", "groupHeader", "groupFooter");
+            List<GroupData> groups = new List<GroupData>();
 
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(30))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+                });
+            }
+            return groups;
+        }
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupCreationTest(GroupData group)
+        {            
             List<GroupData> oldGroups = app.Group.GetGroupList();
 
-            app.Group.Create(testGroup);
+            app.Group.Create(group);
 
             List<GroupData> newGroups = app.Group.GetGroupList();
-            oldGroups.Add(testGroup);
+            oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);            
