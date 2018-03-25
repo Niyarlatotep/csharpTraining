@@ -47,12 +47,22 @@ namespace WebAddressbookTests
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
-                WorkPhone = workPhone
+                WorkPhone = workPhone,
+
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
             };
         }
 
@@ -64,12 +74,26 @@ namespace WebAddressbookTests
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
+            string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
-                AllPhones = allPhones
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };
+        }
+
+        internal ContactData GetFirstContactDetailedInformation()
+        {
+            manager.Navigator.OpenHomePage();
+            OpenDetailedInfoFirst();
+
+            string detailedInformation = driver.FindElement(By.CssSelector("#content")).Text;
+            return new ContactData()
+            {
+                DetailedInformation = detailedInformation
             };
         }
 
@@ -96,6 +120,11 @@ namespace WebAddressbookTests
 
         public void OpenEditingFirst() {
             driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")).Click();
+        }
+
+        public void OpenDetailedInfoFirst()
+        {
+            driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [alt='Details']")).Click();
         }
 
         public void DeleteFirst() {

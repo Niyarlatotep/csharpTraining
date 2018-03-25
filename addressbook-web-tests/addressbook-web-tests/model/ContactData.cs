@@ -9,11 +9,19 @@ namespace WebAddressbookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
+        private string allEmails;
+        private string detailedInformation;
+        private string firstName;
+        private string lastName;
 
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public ContactData()
+        {
         }
 
         public bool Equals(ContactData other)
@@ -55,12 +63,44 @@ namespace WebAddressbookTests
             return LastName.CompareTo(other.LastName);
         }
 
-        public string FirstName {get; set;}
-        public string LastName {get; set;}
+        public string FirstName
+        {
+            get
+            {
+                if (firstName == null || firstName == "")
+                {
+                    return "";
+                }
+                return firstName;
+            }
+            set
+            {
+                firstName = value;
+            }
+        }
+        public string LastName
+        {
+            get
+            {
+                if (lastName == null || lastName == "")
+                {
+                    return "";
+                }
+                return lastName;
+            }
+            set
+            {
+                lastName = value;
+            }
+        }
         public string Address {get; set;}
         public string HomePhone {get; set;}
         public string MobilePhone {get; set;}
-        public string WorkPhone {get; set; }
+        public string WorkPhone {get; set; }    
+        public string Email { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+
         public string AllPhones
         {
             get
@@ -80,6 +120,25 @@ namespace WebAddressbookTests
             } 
          }
 
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return $"{fromatRNforString(Email)}{fromatRNforString(Email2)}{fromatRNforString(Email3)}".Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }        
+
         private string CleanUp(string phone)
         {
             if (phone == null || phone == "")
@@ -87,6 +146,100 @@ namespace WebAddressbookTests
                 return "";
             }
             return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+        }
+
+        public string DetailedInformation
+        {
+            get
+            {
+                if (detailedInformation != null)
+                {
+                    return detailedInformation;
+                }
+                else
+                {
+                    return $"{getDetailedName(FirstName, LastName)}{getDetailedAddress(Address)}{getDetailedPhone(HomePhone, MobilePhone, WorkPhone)}{getDetailedMail(Email, Email2, Email3)}".Trim();                         
+                }
+            }
+
+            set
+            {
+                detailedInformation = value;
+            }           
+        }
+
+        string fromatRNforString(string thisString)
+        {
+            if (thisString == null || thisString == "")
+            {
+                return "";
+            }
+            return thisString + "\r\n";
+        }
+
+        string getDetailedName(string firstName, string lastName)
+        {
+            if (lastName == null || lastName == "")
+            {
+                return $"{firstName}\r\n";
+            }
+         
+            return $"{firstName} {lastName}\r\n";
+        }
+
+        string getDetailedAddress(string address)
+        {
+            address = fromatRNforString(address);
+
+            if (address == "")
+            {
+                return "";
+            }
+          
+            return $"{address}\r\n";
+        }
+
+        string getDetailedPhone(string homePhone, string mobilePhone, string workPhone)
+        {
+            homePhone = fromatRNforString(homePhone);
+            mobilePhone = fromatRNforString(mobilePhone);
+            workPhone = fromatRNforString(workPhone);
+
+            if (homePhone == "" & mobilePhone == "" & workPhone == "")
+            {
+                return "";
+            }
+
+            if (homePhone != "")
+            {
+                homePhone = $"H: {homePhone}";
+            }
+
+            if (mobilePhone != "")
+            {
+                mobilePhone = $"M: {mobilePhone}";
+            }
+
+            if (workPhone != "")
+            {
+                workPhone = $"W: {workPhone}";
+            }          
+
+            return $"{homePhone}{mobilePhone}{workPhone}\r\n";
+        }
+
+        string getDetailedMail(string email, string email2, string email3)
+        {
+            email = fromatRNforString(email);
+            email2 = fromatRNforString(email2);
+            email3 = fromatRNforString(email3);
+
+            if (email == "" & Email2 == "" & email3 == "")
+            {
+                return "";
+            }
+
+            return $"{email}{email2}{email3}\r\n";
         }
     }
 }
