@@ -105,7 +105,5 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.CssSelector("[name='new']")).Click();
         }
-
-
     }
 }
