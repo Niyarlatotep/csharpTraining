@@ -49,7 +49,7 @@ namespace addressbook_test_data_generators
                         });
                     }
                 }
-                if (dataType == "contacts")
+                else if (dataType == "contacts")
                 {
                     dataObjects = new List<ContactData>();
                     for (int i = 0; i < count; i++)
