@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactDeletionTests : AuthTestBase
+    public class ContactDeletionTests : ContactTestBase
     {
         [SetUp]
         public void CreatingTestingDdataContact()
@@ -20,12 +20,19 @@ namespace WebAddressbookTests
         }
         [Test]
         public void ContactDeletionTest()
-        {
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-            app.Contact.DeleteFirst();         
-            List<ContactData> newContacts = app.Contact.GetContactList();
+        {            
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contact.Delete(toBeRemoved);         
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
         }
     }
 }

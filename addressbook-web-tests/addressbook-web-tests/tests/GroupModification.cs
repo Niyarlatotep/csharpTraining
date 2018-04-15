@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
 
         [SetUp]
@@ -23,9 +23,10 @@ namespace WebAddressbookTests
         public void GroupModificationTest()
         {
             GroupData modifyGroup = new GroupData("Your", "Ivanov", "Footer111");
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-            app.Group.ModifyFirstTo(modifyGroup);
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
+
+            app.Group.Modify(oldGroups[0], modifyGroup);
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups[0] = modifyGroup;
             oldGroups.Sort();
             newGroups.Sort();

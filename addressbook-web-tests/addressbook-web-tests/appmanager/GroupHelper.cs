@@ -61,9 +61,25 @@ namespace WebAddressbookTests
             DeleteGo();
         }
 
+        public void Delete(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectCheckBoxById(group.Id);
+            DeleteGo();
+        }
+
         public void ModifyFirstTo(GroupData newData) {
             manager.Navigator.GoToGroupsPage();          
             SelectFirstByCheckBox();
+            OpenEditing();
+            FillGroupForm(newData);
+            Update();
+        }
+
+        public void Modify(GroupData toModify, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectCheckBoxById(toModify.Id);
             OpenEditing();
             FillGroupForm(newData);
             Update();
@@ -81,6 +97,11 @@ namespace WebAddressbookTests
 
         public void SelectFirstByCheckBox() {
             driver.FindElement(By.CssSelector("form span:nth-child(5) input")).Click();
+        }
+
+        public void SelectCheckBoxById(string id)
+        {
+            driver.FindElement(By.CssSelector($"input[value='{id}']")).Click();
         }
 
         public void DeleteGo() {

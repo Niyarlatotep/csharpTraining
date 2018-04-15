@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupDeletionTests : AuthTestBase
+    public class GroupDeletionTests : GroupTestBase
     {
         [SetUp]
         public void CreatingTestingDdataGroup()
@@ -21,11 +21,18 @@ namespace WebAddressbookTests
         [Test]
         public void GroupDeletionTest()
         {
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-            app.Group.DeleteFirst();
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeRemoved = oldGroups[0];
+
+            app.Group.Delete(toBeRemoved);
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }
         }
     }
 }

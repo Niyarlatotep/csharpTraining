@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
         [SetUp]
         public void CreatingTestingDdataContact()
@@ -22,10 +22,11 @@ namespace WebAddressbookTests
         public void ContactModificationTest()
         {
             ContactData contactToModify = new ContactData("Petr", "Pupkin");
+            
 
-            List<ContactData> oldContact = app.Contact.GetContactList();
+            List<ContactData> oldContact = ContactData.GetAll();
 
-            app.Contact.ModifyFirstTo(contactToModify);
+            app.Contact.Modify(oldContact[0], contactToModify);
 
             List<ContactData> newContact = app.Contact.GetContactList();
             oldContact[0] = contactToModify;

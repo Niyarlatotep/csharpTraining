@@ -26,5 +26,19 @@
     "AllPhones": "",
     "AllEmails": "",
     "DetailedInformation": "F-6TQ\\%KE 7H;P2@/["
+  },
+  {
+    "FirstName": "valid first name",
+    "LastName": "valid LastName",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "Email": null,
+    "Email2": null,
+    "Email3": null,
+    "AllPhones": "",
+    "AllEmails": "",
+    "DetailedInformation": "valid DetailedInformation"
   }
 ]

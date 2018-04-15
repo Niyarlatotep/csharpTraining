@@ -104,6 +104,14 @@ namespace WebAddressbookTests
             UpdateContact();
         }
 
+        public void Modify(ContactData contactToModify, ContactData newContactData)
+        {
+            manager.Navigator.OpenHomePage();
+            OpenEditing(contactToModify.Id);
+            FillContactForm(newContactData);
+            UpdateContact();
+        }
+
         public void CreateContactIfNoContacts(ContactData contact)
         {
             manager.Navigator.OpenHomePage();
@@ -122,6 +130,11 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")).Click();
         }
 
+        public void OpenEditing(string id)
+        {
+            driver.FindElement(By.CssSelector($"[href='edit.php?id={id}'] ")).Click();
+        }
+
         public void OpenDetailedInfoFirst()
         {
             driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [alt='Details']")).Click();
@@ -133,6 +146,13 @@ namespace WebAddressbookTests
             DeleteAccept();
         }
 
+        public void Delete(ContactData contact)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectyCheckBoxById(contact.Id);
+            DeleteAccept();
+        }
+
         public void DeleteAccept() {
             driver.FindElement(By.CssSelector("[value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
@@ -141,6 +161,11 @@ namespace WebAddressbookTests
 
         public void SelectFirstByCheckBox() {
             driver.FindElement(By.CssSelector("tbody tr:nth-child(2) td:first-child")).Click();
+        }
+
+        public void SelectyCheckBoxById(string id)
+        {
+            driver.FindElement(By.CssSelector($"input[value='{id}']")).Click();
         }
 
         public void Create(ContactData contact)
