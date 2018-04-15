@@ -14,13 +14,23 @@ namespace addressbook_test_data_generators
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0)
+            int count = 0;
+            if (args.Length < 4)
             {
-                Console.Write("dataType=[group:contacts] count=[line numbers] fileName format=[xm:json]");
+                Console.Write("dataType=[group:contacts] count=[line numbers] fileName=[path to file] format=[xm:json]");
                 return;
             }
 
-            int count = Convert.ToInt32(args[1]);
+            try
+            {
+                count = Convert.ToInt32(args[1]);
+            }
+            catch
+            {
+                Console.Write("Count is not a number");
+                return;
+            }            
+                        
             using (StreamWriter writer = new StreamWriter(args[2]))            
             {
                 string format = args[3];
@@ -39,7 +49,7 @@ namespace addressbook_test_data_generators
                         });
                     }
                 }
-                else if (dataType == "contacts")
+                if (dataType == "contacts")
                 {
                     dataObjects = new List<ContactData>();
                     for (int i = 0; i < count; i++)
@@ -53,7 +63,7 @@ namespace addressbook_test_data_generators
                 }
                 else
                 {
-                    Console.Write("Unrecognized type " + format);
+                    Console.Write("Unrecognized type " + dataType);
                     return;
                 }
                                
