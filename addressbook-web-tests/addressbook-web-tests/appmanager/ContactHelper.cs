@@ -165,7 +165,7 @@ namespace WebAddressbookTests
 
         public void SelectyCheckBoxById(string id)
         {
-            driver.FindElement(By.CssSelector($"input[value='{id}']")).Click();
+            driver.FindElement(By.CssSelector($"input[id='{id}']")).Click();
         }
 
         public void Create(ContactData contact)
@@ -188,6 +188,32 @@ namespace WebAddressbookTests
         public void SubmitCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectyCheckBoxById(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
     }
 }

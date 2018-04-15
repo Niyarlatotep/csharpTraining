@@ -81,8 +81,10 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-            List<GroupData> fromUi = app.Group.GetGroupList();
-            List<GroupData> fromDb = GroupData.GetAll();
+            foreach(ContactData contact in ContactData.GetAll())
+            {
+                Console.WriteLine(contact);
+            }
         }
     }
 }
