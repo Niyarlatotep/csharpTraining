@@ -121,6 +121,8 @@ namespace WebAddressbookTests
             OpenEditing(contactToModify.Id);
             FillContactForm(newContactData);
             UpdateContact();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
         public void CreateContactIfNoContacts(ContactData contact)
@@ -162,6 +164,8 @@ namespace WebAddressbookTests
             manager.Navigator.OpenHomePage();
             SelectyCheckBoxById(contact.Id);
             DeleteAccept();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
         public void DeleteAccept() {

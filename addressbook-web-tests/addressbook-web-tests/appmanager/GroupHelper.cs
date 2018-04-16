@@ -66,6 +66,8 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
             SelectCheckBoxById(group.Id);
             DeleteGo();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
         public void ModifyFirstTo(GroupData newData) {
@@ -83,6 +85,8 @@ namespace WebAddressbookTests
             OpenEditing();
             FillGroupForm(newData);
             Update();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
         public void OpenEditing() {
