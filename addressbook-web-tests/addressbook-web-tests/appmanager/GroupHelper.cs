@@ -16,6 +16,15 @@ namespace WebAddressbookTests
         {
         }
 
+        internal void CreateGroupIfNotGroups(GroupData groupToCreate)
+        {
+            List<GroupData> groups = GroupData.GetAll();
+            if (groups.Count == 0)
+            {
+                Create(groupToCreate);
+            }
+        }
+
         public void ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
@@ -48,7 +57,8 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
         }
 
-        public void CreateGroupIfNoGroups(GroupData group) {
+        public void CreateGroupIfNoGroups(GroupData group)
+        {
             manager.Navigator.GoToGroupsPage();
             if (!IsElementPresent(By.CssSelector("form span:nth-child(5)")))
             {

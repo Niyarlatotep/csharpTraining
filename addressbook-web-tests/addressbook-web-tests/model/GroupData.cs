@@ -115,6 +115,14 @@ namespace WebAddressbookTests
             }
         }
 
+        public static List<GroupData> GetGroupWithContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return db.Groups.Where(x => x.Deprecated == "0000-00-00 00:00:00" && db.GCR.Select(y => y.GroupId).Contains(x.Id)).ToList();
+            }  
+        }
+
         public List<ContactData> GetContacts()
         {
             using (AddressBookDB db = new AddressBookDB())

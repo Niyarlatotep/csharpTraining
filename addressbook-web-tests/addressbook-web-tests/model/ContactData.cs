@@ -113,6 +113,21 @@ namespace WebAddressbookTests
             }
         }
 
+        public static List<ContactData> GetContactsWithoutGroup()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {               
+                return db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00" && !db.GCR.Select(y => y.ContactId).Contains(x.Id)).ToList();
+            }           
+        }
+
+        public static List<ContactData> GetContactsWithGroup()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00" && db.GCR.Select(y => y.ContactId).Contains(x.Id)).ToList();
+            }
+        }
 
         public string Address {get; set;}
         public string HomePhone {get; set;}

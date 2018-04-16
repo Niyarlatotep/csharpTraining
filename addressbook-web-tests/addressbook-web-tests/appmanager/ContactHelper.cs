@@ -16,6 +16,24 @@ namespace WebAddressbookTests
         {
         }
 
+        internal void CreateContactIfNoContactsWithoutGroup(ContactData contact)
+        {
+            List<ContactData> contactsWithoutGroups = ContactData.GetContactsWithoutGroup();
+            if (contactsWithoutGroups.Count == 0)
+            {
+                Create(contact);
+            }
+        }
+
+        internal void AddContactToGroupIfNoConatctsWithGroup()
+        {
+            List<ContactData> contactsWithGroups = ContactData.GetContactsWithGroup();
+            if (contactsWithGroups.Count == 0)
+            {
+                AddFirstContactToFirstGroup();
+            }
+        }
+
         private List<ContactData> contactsCache = null;
 
         public List<ContactData> GetContactList()
@@ -139,7 +157,7 @@ namespace WebAddressbookTests
             contactsCache = null;
         }
 
-        public void OpenEditingFirst() {
+        public void OpenEditingFirst(){
             driver.FindElement(By.CssSelector("tbody tr:nth-child(2) [href*='edit']")).Click();
         }
 
@@ -211,6 +229,16 @@ namespace WebAddressbookTests
             ClearGroupFilter();
             SelectyCheckBoxById(contact.Id);
             SelectGroup(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void AddFirstContactToFirstGroup()
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectFirstByCheckBox();
             CommitAddingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                     .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);

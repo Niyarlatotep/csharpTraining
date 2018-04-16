@@ -9,17 +9,23 @@ namespace WebAddressbookTests
 {
     class AddingConcatToGroupTests : AuthTestBase
     {
+        [SetUp]
+        public void PresetTestingData()
+        {
+            app.Group.CreateGroupIfNoGroups(new GroupData("Group for Adding"));
+            app.Contact.CreateContactIfNoContactsWithoutGroup(new ContactData("Contcat First Name", "ToDelete second Name"));            
+        }
         [Test]
         public void TestAddingContactToGroup()
         {
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(group.GetContacts()).First();
+            ContactData contactWithoutGroup = ContactData.GetAll().Except(group.GetContacts()).First();
 
-            app.Contact.AddContactToGroup(contact, group);
+            app.Contact.AddContactToGroup(contactWithoutGroup, group);
 
             List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
+            oldList.Add(contactWithoutGroup);
             newList.Sort();
             oldList.Sort();
 
