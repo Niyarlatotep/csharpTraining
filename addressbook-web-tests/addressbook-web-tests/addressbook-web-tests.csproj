@@ -95,6 +95,7 @@
     <Compile Include="tests\ContactInformationTests.cs" />
     <Compile Include="tests\ContactModification.cs" />
     <Compile Include="tests\ContactTestBase.cs" />
+    <Compile Include="tests\DeletingContactFromGroup.cs" />
     <Compile Include="tests\GroupDeletion.cs" />
     <Compile Include="tests\GroupModification.cs" />
     <Compile Include="tests\GroupTestBase.cs" />

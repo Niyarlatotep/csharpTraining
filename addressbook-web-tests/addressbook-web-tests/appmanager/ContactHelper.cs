@@ -36,6 +36,17 @@ namespace WebAddressbookTests
             return new List<ContactData>(contactsCache);
         }
 
+        internal void DeleteContactFromGroup(ContactData contactToDelete, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectGroupFilter(group);
+            SelectyCheckBoxById(contactToDelete.Id);
+            SelectGroup(group.Name);
+            CommitDeletingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
         internal ContactData GetFirstContactInformationFromEditForm()
         {
 
@@ -195,7 +206,7 @@ namespace WebAddressbookTests
             manager.Navigator.OpenHomePage();
             ClearGroupFilter();
             SelectyCheckBoxById(contact.Id);
-            SelectGroupToAdd(group.Name);
+            SelectGroup(group.Name);
             CommitAddingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                     .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -206,7 +217,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("add")).Click();
         }
 
-        private void SelectGroupToAdd(string name)
+        private void CommitDeletingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroup(string name)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
         }
@@ -214,6 +230,11 @@ namespace WebAddressbookTests
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        private void SelectGroupFilter(GroupData group)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText($"{group.Name}");
         }
     }
 }
