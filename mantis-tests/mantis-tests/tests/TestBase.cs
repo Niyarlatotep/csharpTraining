@@ -15,20 +15,11 @@ namespace mantis_tests
         public void SetupApplicationManager()
         {
             app = ApplicationManager.GetInstance();
-            //app.Auth.Login(new AccountData("admin", "secret"));
-        }
-
-        public static Random rnd = new Random();
-
-        public static string GenerateRandomString(int max)
-        {            
-            int l = Convert.ToInt32(rnd.NextDouble() * max);
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < l; i++)
+            app.Auth.Login(new AccountData()
             {
-                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 65)));
-            }
-            return builder.ToString(); 
+                Name = "administrator",
+                Password = "root"
+            });
         }
     }
 }

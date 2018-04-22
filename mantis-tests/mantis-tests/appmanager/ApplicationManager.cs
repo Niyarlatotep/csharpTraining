@@ -15,7 +15,10 @@ namespace mantis_tests
     {
         protected IWebDriver driver;
         protected string baseURL;
-       
+        protected LoginHelper loginHelper;
+        protected NavigationHelper navigator;
+        protected ProjectHelper projectHelper;
+
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager() {
@@ -23,9 +26,14 @@ namespace mantis_tests
             options.UseLegacyImplementation = true;
             options.BrowserExecutableLocation = @"C:\Program Files (x86)\Mozilla Firefox\firefox.exe";
             driver = new FirefoxDriver(options);
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/mantisbt-1.2.17/login_page.php";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this);
+            projectHelper = new ProjectHelper(this);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -45,7 +53,7 @@ namespace mantis_tests
             if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
+                newInstance.Navigator.OpenHomePage();
                 app.Value = newInstance;
             }
             return app.Value;
@@ -69,5 +77,29 @@ namespace mantis_tests
 
         public RegistrationHelper Registration { get; private set; }
         public FtpHelper Ftp { get; private set; }
+        public LoginHelper Auth
+        {
+            get
+            {
+                return loginHelper;
+            }
+        }
+
+        public NavigationHelper Navigator
+        {
+            get
+            {
+                return navigator;
+            }
+        }
+        public ProjectHelper Project
+        {
+            get
+            {
+                return projectHelper;
+            }
+        }
+
+        public APIHelper API { get; private set; }
     }
 }

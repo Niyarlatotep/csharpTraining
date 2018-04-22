@@ -56,6 +56,7 @@ namespace mantis_tests
                 return firstCompare;
             }
 
+
             return Description.CompareTo(other.Description);
         }
 
@@ -81,6 +82,12 @@ namespace mantis_tests
             {
                 description = value;
             }
-        }        
+        }    
+        
+        public string Id
+        {
+            get;
+            set;
+        }    
     }
 }
