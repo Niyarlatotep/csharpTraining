@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -27,9 +28,12 @@ namespace mantis_tests
             
             foreach (IWebElement element in elements)
             {
+                string href = element.FindElement(By.TagName("a")).GetAttribute("href");
+                string id = Regex.Match(href, @"\d+$").Value;
+
                 string name = element.FindElement(By.CssSelector("[href*='manage_proj_edit_page']")).Text;
                 string description = element.FindElement(By.CssSelector("td:nth-child(5)")).Text;                
-                projects.Add(new ProjectData(name, description));
+                projects.Add(new ProjectData(name, description) { Id = id });
             }
             return projects;
         }        
